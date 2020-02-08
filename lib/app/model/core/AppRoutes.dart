@@ -2,10 +2,16 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter_kit/app/ui/page/AppDetailPage.dart';
 import 'package:flutter_starter_kit/app/ui/page/HomePage.dart';
+import 'package:flutter_starter_kit/app/ui/page/LoginPage.dart';
 
 var rootHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return HomePage();
+    });
+
+var loginHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return LoginPage();
     });
 
 var appDetailRouteHandler = new Handler(
@@ -28,6 +34,7 @@ class AppRoutes {
           print('ROUTE WAS NOT FOUND !!!');
         });
     router.define(HomePage.PATH, handler: rootHandler);
+    router.define(LoginPage.PATH, handler: loginHandler);
     router.define(AppDetailPage.PATH, handler: appDetailRouteHandler);
   }
 }

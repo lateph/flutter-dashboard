@@ -30,10 +30,10 @@ class HomeBloc{
 
   void _init(){
     // Debounce search text
-    _searchText.debounceTime(const Duration(milliseconds: 500))
-    .listen((String searchText){
-      _searchApps(searchText);
-    });
+//    _searchText.debounceTime(const Duration(milliseconds: 500))
+//    .listen((String searchText){
+//      _searchApps(searchText);
+//    });
   }
 
   void dispose() {
@@ -52,58 +52,34 @@ class HomeBloc{
     _isShowLoading.add(true);
     AppStoreAPIRepository apiProvider = _application.appStoreAPIRepository;
 
-    StreamSubscription subscription = Observable.fromFuture(_application.dbAppStoreRepository.deleteAllAppContent())
-        .flatMap((_) => apiProvider.getTop10FeatureApp())
-        .zipWith(apiProvider.getTop100FreeApp(), (List<AppContent> featureApps, List<AppContent> freeApps){
-          return CombinedAppResponse(featureApps, freeApps);
-        })
-        .listen((CombinedAppResponse response){
-          if(null != appList){
-            appList.clear();
-          }
-          appList = List<HomeListItem>();
-
-          appList.add(FeatureListItem(response.featureApps));
-
-          List<AppContent> entries = response.freeApps;
-
-          for(var i = 0 ; i < entries.length ; i++){
-            appList.add(TopAppListItem(entries[i]));
-          }
-          _feedList.add(appList);
-          _isShowLoading.add(false);
-        },
-        onError: (e, s){
-          Log.info(e);
-        });
-    _compositeSubscription.add(subscription);
+//    StreamSubscription subscription = Observable.fromFuture(_application.dbAppStoreRepository.deleteAllAppContent())
+//        .flatMap((_) => apiProvider.getTop10FeatureApp())
+//        .zipWith(apiProvider.getTop100FreeApp(), (List<AppContent> featureApps, List<AppContent> freeApps){
+//          return CombinedAppResponse(featureApps, freeApps);
+//        })
+//        .listen((CombinedAppResponse response){
+//          if(null != appList){
+//            appList.clear();
+//          }
+//          appList = List<HomeListItem>();
+//
+//          appList.add(FeatureListItem(response.featureApps));
+//
+//          List<AppContent> entries = response.freeApps;
+//
+//          for(var i = 0 ; i < entries.length ; i++){
+//            appList.add(TopAppListItem(entries[i]));
+//          }
+//          _feedList.add(appList);
+//          _isShowLoading.add(false);
+//        },
+//        onError: (e, s){
+//          Log.info(e);
+//        });
+//    _compositeSubscription.add(subscription);
   }
 
-  void _searchApps(String searchKey){
-    StreamSubscription subscription = Observable.fromFuture(_application.dbAppStoreRepository.loadFeaturesApp(searchKey))
-      .zipWith(Observable.fromFuture(_application.dbAppStoreRepository.loadTopFreeApp(searchKey)), (List<AppContent> featureApps, List<AppContent> freeApps){
-      return CombinedAppResponse(featureApps, freeApps);
-    })
-    .listen((CombinedAppResponse response){
-      appList.clear();
 
-      if(response.featureApps.length > 0){
-        appList.add(FeatureListItem(response.featureApps));
-      }
-
-      if(response.freeApps.length > 0){
-        List<AppContent> entries = response.freeApps;
-        for(var i = 0 ; i < entries.length ; i++){
-          appList.add(TopAppListItem(entries[i]));
-        }
-      }
-      _feedList.add(appList);
-    },
-    onError: (e, s){
-      Log.info(e);
-    });
-    _compositeSubscription.add(subscription);
-  }
 
   void loadDetailInfo(int index){
     if(appList.length == 0 || appList.length <= index){
@@ -121,12 +97,12 @@ class HomeBloc{
 
       loadedMap[freeAppListItem.entry.trackId] = true;
 
-      StreamSubscription subscription = _application.appStoreAPIRepository.getAppDetail(freeAppListItem.entry.trackId.toString())
-          .listen((AppContent appContent){
-        freeAppListItem.entry = appContent;
-        _noticeItemUpdate.add(appContent.trackId);
-      });
-      _compositeSubscription.add(subscription);
+//      StreamSubscription subscription = _application.appStoreAPIRepository.getAppDetail(freeAppListItem.entry.trackId.toString())
+//          .listen((AppContent appContent){
+//        freeAppListItem.entry = appContent;
+//        _noticeItemUpdate.add(appContent.trackId);
+//      });
+//      _compositeSubscription.add(subscription);
     }
   }
 }

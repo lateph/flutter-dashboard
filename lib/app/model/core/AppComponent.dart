@@ -46,6 +46,9 @@ class AppComponentState extends State<AppComponent> {
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
+          ),
         ),
         onGenerateRoute: _application.router.generator,
     );

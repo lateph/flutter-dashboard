@@ -26,12 +26,12 @@ class AppDetailBloc{
 
   void loadDetail(String appId){
     _isShowLoading.add(true);
-    StreamSubscription subscription = _application.appStoreAPIRepository.getAppDetail(appId)
-        .listen((AppContent appContent){
-      _appContent.add(appContent);
-      _isShowLoading.add(false);
-    });
-    _compositeSubscription.add(subscription);
+//    StreamSubscription subscription = _application.appStoreAPIRepository.getAppDetail(appId)
+//        .listen((AppContent appContent){
+//      _appContent.add(appContent);
+//      _isShowLoading.add(false);
+//    });
+//    _compositeSubscription.add(subscription);
   }
 
 }
